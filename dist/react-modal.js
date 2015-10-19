@@ -1,11 +1,10 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ReactModal = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
-var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var ModalPortal = React.createFactory(require('./ModalPortal'));
 var ariaAppHider = require('../helpers/ariaAppHider');
 var elementClass = require('element-class');
 
-var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
+var SafeHTMLElement = typeof window != 'undefined' ? window.HTMLElement : {};
 
 var Modal = module.exports = React.createClass({
 
@@ -81,7 +80,7 @@ function sanitizeProps(props) {
   delete props.ref;
 }
 
-},{"../helpers/ariaAppHider":3,"./ModalPortal":2,"element-class":8,"react/lib/ExecutionEnvironment":20}],2:[function(require,module,exports){
+},{"../helpers/ariaAppHider":3,"./ModalPortal":2,"element-class":8}],2:[function(require,module,exports){
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 var div = React.DOM.div;
 var focusManager = require('../helpers/focusManager');
@@ -283,7 +282,7 @@ var ModalPortal = module.exports = React.createClass({
 });
 
 },{"../helpers/focusManager":4,"../helpers/scopeTab":5,"lodash.assign":9}],3:[function(require,module,exports){
-var _element = document.body;
+var _element = typeof document !== 'undefined' ? document.body : null;
 
 function setElement(element) {
   if (typeof element === 'string') {
@@ -1660,50 +1659,6 @@ function isNative(value) {
 }
 
 module.exports = isArray;
-
-},{}],20:[function(require,module,exports){
-/**
- * Copyright 2013-2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule ExecutionEnvironment
- */
-
-/*jslint evil: true */
-
-"use strict";
-
-var canUseDOM = !!(
-  (typeof window !== 'undefined' &&
-  window.document && window.document.createElement)
-);
-
-/**
- * Simple, lightweight module assisting with the detection and context of
- * Worker. Helps avoid circular dependencies and allows code to reason about
- * whether or not they are in a Worker, even if they never include the main
- * `ReactWorker` dependency.
- */
-var ExecutionEnvironment = {
-
-  canUseDOM: canUseDOM,
-
-  canUseWorkers: typeof Worker !== 'undefined',
-
-  canUseEventListeners:
-    canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-  canUseViewport: canUseDOM && !!window.screen,
-
-  isInWorker: !canUseDOM // For now, this is true - might change in the future.
-
-};
-
-module.exports = ExecutionEnvironment;
 
 },{}]},{},[7])(7)
 });
